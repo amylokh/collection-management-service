@@ -38,7 +38,6 @@ const updateCollection = (req, res, next) => {
                         insert = false;
                     }
                 })
-                console.log("insert-> "+ insert);
                 if (insert) {
                     let document = result;
                     let newAuditLog = {
@@ -68,12 +67,8 @@ const updateCollection = (req, res, next) => {
             }
         })
         .catch(err => {
-            if (err.name === 'ValidationError') {
-                res.status(400).json({ message: 'Bad Request' });
-            }
-            else {
-                res.status(500).json({ message: 'An error occurred while updating collection details' });
-            }
+            console.log('Some error occurred '+err);
+            res.status(500).json({ message: 'An error occurred while updating collection details' });
         })
 };
 
