@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const CollectionController = require('../controllers/collection.controller');
+const verifyToken  = require('../services/auth-service');
 
 //protect this route with auth api
-router.post('/create', CollectionController.createCollection);
+router.post('/create', verifyToken ,CollectionController.createCollection);
 
 module.exports = router;

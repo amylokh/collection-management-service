@@ -1,0 +1,5 @@
+{
+    "port": 9090,
+    "AUTH_HOST": "http://localhost:8080/auth"
+}
+  
