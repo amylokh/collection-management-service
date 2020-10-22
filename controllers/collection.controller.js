@@ -1,4 +1,5 @@
 const Collection = require('../models/collection.model');
+const isNotToday = require('../helpers/date-helper');
 
 const createCollection = (req, res, next) => {
 
@@ -31,10 +32,10 @@ const createCollection = (req, res, next) => {
             }
             // document exists, just create/push a new audit trail
             else {
-                // if the incoming property id is already scanned, then don't allow update
+                // if the incoming property id is already scanned today, then don't allow update
                 var insert = true;
                 result.auditTrail.forEach(element => {
-                    if (req.body.propertyId && element.propertyId === req.body.propertyId) {
+                    if (req.body.propertyId && element.propertyId === req.body.propertyId && isNotToday(element.date)) {
                         insert = false;
                     }
                 })
