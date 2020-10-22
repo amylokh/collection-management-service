@@ -3,6 +3,6 @@ const router = express.Router();
 const CollectionController = require('../controllers/collection.controller');
 
 //protect this route with auth api
-router.post('/update', CollectionController.updateCollection);
+router.post('/create', CollectionController.createCollection);
 
 module.exports = router;

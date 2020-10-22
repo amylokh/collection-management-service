@@ -1,6 +1,6 @@
 const Collection = require('../models/collection.model');
 
-const updateCollection = (req, res, next) => {
+const createCollection = (req, res, next) => {
 
     // create new collection/document if it doesn't exist or if it exists then update the audit trail
     Collection.findOne({ email: req.body.email })
@@ -29,7 +29,7 @@ const updateCollection = (req, res, next) => {
                         }
                     })
             }
-            // document exists, just push a new audit trail
+            // document exists, just create/push a new audit trail
             else {
                 // if the incoming property id is already scanned, then don't allow update
                 var insert = true;
@@ -73,5 +73,5 @@ const updateCollection = (req, res, next) => {
 };
 
 module.exports = {
-    updateCollection
+    createCollection
 };
