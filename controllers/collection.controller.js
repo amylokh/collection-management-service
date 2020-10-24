@@ -1,17 +1,17 @@
 const Collection = require('../models/collection.model');
-const isNotToday = require('../helpers/date-helper');
+const isToday = require('../helpers/date-helper');
 
 const createCollection = (req, res, next) => {
 
     // create new collection/document if it doesn't exist or if it exists then update the audit trail
-    Collection.findOne({ email: req.body.email })
+    Collection.findOne({ propertyId: req.body.propertyId })
         .then(result => {
             // if it doesn't exist, then create a fresh new document
             if (!result) {
                 let newCollection = new Collection({
-                    email: req.body.email,
+                    propertyId: req.body.propertyId,
                     auditTrail: [{
-                        propertyId: req.body.propertyId,
+                        email: req.body.email,
                         lat: req.body.lat,
                         long: req.body.long,
                         date: new Date()
@@ -33,16 +33,12 @@ const createCollection = (req, res, next) => {
             // document exists, just create/push a new audit trail
             else {
                 // if the incoming property id is already scanned today, then don't allow update
-                var insert = true;
-                result.auditTrail.forEach(element => {
-                    if (req.body.propertyId && element.propertyId === req.body.propertyId && isNotToday(element.date)) {
-                        insert = false;
-                    }
-                })
-                if (insert) {
+                var auditLogs = result.auditTrail;
+
+                if (!isToday(auditLogs[auditLogs.length - 1].date)) {
                     let document = result;
                     let newAuditLog = {
-                        "propertyId": req.body.propertyId,
+                        "email": req.body.email,
                         "lat": req.body.lat,
                         "long": req.body.long,
                         "date": new Date()

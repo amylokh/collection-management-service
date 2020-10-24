@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const auditTrailModel = new Schema({
-    propertyId : {
+    email : {
         type: String,
-        required: true
+        required: true,
+        match: [emailRegex, 'email format is invalid']
     },
     date : {
         type: Date,
@@ -23,11 +24,11 @@ const auditTrailModel = new Schema({
 },{ _id : false });
 
 const collectionModel = new Schema({
-    email: {
+    propertyId: {
         type: String,
         required: true,
         lowercase: true,
-        match: [emailRegex, 'email format is invalid']
+        unique: true
     },
     auditTrail: {
         type : [ auditTrailModel ],
