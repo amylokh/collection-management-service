@@ -69,6 +69,17 @@ const createCollection = (req, res, next) => {
         })
 };
 
+const getAllCollections = (req, res, next) => {
+    Collection.find({})
+        .then(result=> {
+            res.status(200).json(result);
+        })
+        .catch(err=> {
+            console.log(err);
+            res.status(500).json({message: 'Interval server error'});
+        });
+}
+
 module.exports = {
-    createCollection
+    createCollection, getAllCollections
 };
