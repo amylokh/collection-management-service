@@ -33,9 +33,10 @@ const createCollection = (req, res, next) => {
             // document exists, just create/push a new audit trail
             else {
                 // if the incoming property id is already scanned today, then don't allow update
+                // or if there are no audit logs, then allow update
                 var auditLogs = result.auditTrail;
 
-                if (!isToday(auditLogs[auditLogs.length - 1].date)) {
+                if ((auditLogs && auditLogs.length == 0) || !isToday(auditLogs[auditLogs.length - 1].date)) {
                     let document = result;
                     let newAuditLog = {
                         "email": req.body.email,

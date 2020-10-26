@@ -7,7 +7,8 @@ const auditTrailModel = new Schema({
     email : {
         type: String,
         required: true,
-        match: [emailRegex, 'email format is invalid']
+        match: [emailRegex, 'email format is invalid'],
+        trim: true
     },
     date : {
         type: Date,
@@ -16,10 +17,12 @@ const auditTrailModel = new Schema({
     lat: {
         type: String,
         required: true,
+        trim: true
     },
     long: {
         type: String,
         required: true,
+        trim: true
     }
 },{ _id : false });
 

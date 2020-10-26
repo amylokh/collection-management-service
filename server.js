@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const CollectionRoute = require('./routes/collection.routes');
+const PropertiesRoute = require('./routes/properties.routes');
 
 const atlasMongoDbConnectionString = 'mongodb+srv://'+ process.env['USERNAME'] +':'+ process.env['PASSWORD'] + '@users.m73nf.mongodb.net/users?retryWrites=true&w=majority';
 const localDbConnectionString = 'mongodb://localhost:27017/users-data';
 
-mongoose.connect(localDbConnectionString, 
+mongoose.connect(atlasMongoDbConnectionString, 
     {
         useNewUrlParser: true, 
         useUnifiedTopology: true,
@@ -37,3 +38,4 @@ app.listen(PORT, () => {
 });
 
 app.use('/collection', CollectionRoute);
+app.use('/properties', PropertiesRoute);
